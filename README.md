@@ -1,5 +1,6 @@
-# Egg + React + SSR应用骨架
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
+# Egg + Vue + SSR应用骨架
+
+基于[egg-react-ssr](https://github.com/ykfe/egg-react-ssr)，进行扩展支持
 
 # Getting Start
 
