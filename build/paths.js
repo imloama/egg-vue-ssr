@@ -49,7 +49,9 @@ const moduleFileExtensions = [
   'tsx',
   'json',
   'web.jsx',
-  'jsx'
+  'jsx',
+  'web.vue',
+  'vue'
 ]
 
 // config after eject: we're in ./config/

@@ -4,11 +4,13 @@ const baseConfig = require('./webpack.config.base')
 const nodeExternals = require('webpack-node-externals')
 const paths = require('./paths')
 const isDev = process.env.NODE_ENV === 'development'
+const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
 
 const plugins = [
   new webpack.DefinePlugin({
     __isBrowser__: false
-  })
+  }),
+  new VueSSRServerPlugin()
 ]
 module.exports = merge(baseConfig, {
   devtool: isDev ? 'eval-source-map' : '',

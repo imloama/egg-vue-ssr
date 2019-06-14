@@ -5,7 +5,7 @@ const path = require('path')
 // style files regexes
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const getStyleLoaders = require('./util').getStyleLoaders
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
+const { VueLoaderPlugin } = require('vue-loader')
 let webpackModule = {
   strictExportPresence: true,
   rules: [
@@ -21,9 +21,18 @@ let webpackModule = {
           }
         },
         {
+          test: /\.vue$/,
+          loader: 'vue-loader',
+          options: {
+            compilerOptions: {
+              preserveWhitespace: false
+            }
+          }
+        },
+        {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
-          include: [paths.appSrc, paths.resolveApp('node_modules/ykfe-utils')],
           loader: require.resolve('babel-loader'),
+          exclude: /node_modules/,
           options: {
             cacheDirectory: true,
             cacheCompression: false
@@ -102,6 +111,7 @@ module.exports = {
   },
   module: webpackModule,
   plugins: [
+    new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: 'static/css/[name].css',
       chunkFilename: 'static/css/[name].chunk.css'

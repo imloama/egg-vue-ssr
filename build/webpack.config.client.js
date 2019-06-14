@@ -8,7 +8,6 @@ const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const paths = require('./paths')
 const ManifestPlugin = require('webpack-manifest-plugin')
-const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const safePostCssParser = require('postcss-safe-parser')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
@@ -16,6 +15,7 @@ const publicPath = '/'
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false'
 const isDev = process.env.NODE_ENV === 'development'
 const devtool = isDev ? 'cheap-module-source-map' : (shouldUseSourceMap ? 'source-map' : false)
+const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const optimization = {
   runtimeChunk: true,
   splitChunks: {
@@ -91,6 +91,7 @@ const plugins = [
     fileName: 'asset-manifest.json',
     publicPath: publicPath
   }),
+  new VueSSRClientPlugin(),
   new HtmlWebpackPlugin({
     template: paths.template
   })
@@ -105,9 +106,6 @@ module.exports = merge(baseConfig, {
   },
   resolve: {
     alias: {
-      'react': isDev ? paths.resolveApp('node_modules/react/cjs/react.development.js') : paths.resolveApp('node_modules/react/cjs/react.production.min.js'),
-      'react-dom': isDev ? paths.resolveApp('node_modules/react-dom/cjs/react-dom.development.js') : paths.resolveApp('node_modules/react-dom/cjs/react-dom.production.min.js'),
-      'react-router-dom': isDev ? paths.resolveApp('node_modules/react-router-dom/cjs/react-router-dom.js') : paths.resolveApp('node_modules/react-router-dom/cjs/react-router-dom.min.js')
     }
   },
   output: {
